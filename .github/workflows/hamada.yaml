@@ -1,33 +1,26 @@
-name: CI Workflow
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-      - 'feature/*'
-
+name: Cowsay UI/MOBILE
+ 
+on: push
+ 
 jobs:
-  unit-testing:
-    name: Unit Testing
-    strategy:
-      matrix:
-        node_version: [18, 20]
-        operating_system: [ubuntu-latest, macos-latest]
-    
-    runs-on: ${{ matrix.operating_system }}
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4.4.0
-        with:
-          node-version: ${{ matrix.node_version }}
-
-      - name: Install npm dependencies
-        run: npm install
-
-      - name: Run unit tests
-        run: npm test
+    Ascii_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v4
+ 
+           
+            - name: install cowsay program
+              run: sudo apt-get install cowsay -y
+             
+            - name: Execute cowsay CMD
+              run: cowsay -f dragon "Run for cover, iam a Dragon....RAWR" >> dragon.txt
+           
+            - name: Test File Exists
+              run: grep -i "dragon" dragon.txt
+           
+            - name: Read File
+              run: cat dragon.txt
+ 
+            - name: checkout repo files
+              run: ls
